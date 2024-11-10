@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EditBook from './EditBook';
+import BookDetails from './BookDetails'; // Importa BookDetails
 import './BookList.css';
 
 const BookList = ({ refresh }) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editBookId, setEditBookId] = useState(null);
+  const [selectedBookId, setSelectedBookId] = useState(null); // Stato per il libro selezionato per i dettagli
 
   const fetchBooks = async () => {
     try {
@@ -38,6 +40,10 @@ const BookList = ({ refresh }) => {
     }
   };
 
+  const handleCloseDetails = () => {
+    setSelectedBookId(null); // Chiude i dettagli quando richiesto
+  };
+
   if (loading) {
     return <p>Loading books...</p>;
   }
@@ -51,6 +57,8 @@ const BookList = ({ refresh }) => {
           onBookUpdated={() => setEditBookId(null)}
           onCancel={() => setEditBookId(null)}
         />
+      ) : selectedBookId ? ( // Mostra i dettagli del libro selezionato
+        <BookDetails bookId={selectedBookId} onClose={handleCloseDetails} />
       ) : (
         <table>
           <thead>
@@ -78,6 +86,9 @@ const BookList = ({ refresh }) => {
                     </button>
                     <button className="delete-button" onClick={() => handleDelete(book.id)}>
                       Delete
+                    </button>
+                    <button className="details-button" onClick={() => setSelectedBookId(book.id)}>
+                      Details
                     </button>
                   </div>
                 </td>

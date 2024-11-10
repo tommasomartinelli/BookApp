@@ -1,0 +1,36 @@
+.book-details {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.book-details h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 0;
+}
+
+.book-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.book-details button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.book-details button:hover {
+    background-color: #0056b3;
+}
