@@ -24,6 +24,26 @@ services:
     depends_on:
       - db
 
+  django_app:
+    build:
+      context: ./django_app
+    container_name: django_app
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: bookstore
+      DB_USER: user
+      DB_PASSWORD: password
+      SECRET_KEY: your-secret-key  
+      DEBUG: "True"
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+    volumes:
+      - ./django_app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
 volumes:
   pgdata:
 
