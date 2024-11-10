@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EditBook from './EditBook';
+import './BookList.css';
 
 const BookList = ({ refresh }) => {
   const [books, setBooks] = useState([]);
@@ -26,16 +27,11 @@ const BookList = ({ refresh }) => {
     setEditBookId(bookId);
   };
 
-  const handleUpdate = () => {
-    setEditBookId(null);
-    fetchBooks();
-  };
-
   const handleDelete = async (bookId) => {
     if (window.confirm("Are you sure you want to delete this book?")) {
       try {
         await axios.delete(`http://localhost:8000/api/books/${bookId}/`);
-        fetchBooks();  
+        fetchBooks();
       } catch (error) {
         console.error("Error deleting book:", error);
       }
@@ -47,12 +43,12 @@ const BookList = ({ refresh }) => {
   }
 
   return (
-    <div>
+    <div className="table-container">
       <h2>Book List</h2>
       {editBookId ? (
         <EditBook
           bookId={editBookId}
-          onBookUpdated={handleUpdate}
+          onBookUpdated={() => setEditBookId(null)}
           onCancel={() => setEditBookId(null)}
         />
       ) : (
@@ -76,8 +72,14 @@ const BookList = ({ refresh }) => {
                 <td>{book.price}</td>
                 <td>{book.category}</td>
                 <td>
-                  <button onClick={() => handleEdit(book.id)}>Edit</button>
-                  <button onClick={() => handleDelete(book.id)}>Delete</button>
+                  <div className="action-buttons">
+                    <button className="edit-button" onClick={() => handleEdit(book.id)}>
+                      Edit
+                    </button>
+                    <button className="delete-button" onClick={() => handleDelete(book.id)}>
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

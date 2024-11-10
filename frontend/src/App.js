@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import BookList from './components/BookList';
-import AddBook from './components/AddBook';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
 
 function App() {
-  const [refresh, setRefresh] = useState(false);
-
-  const refreshBooks = () => {
-    setRefresh(!refresh); 
-  };
-
   return (
-    <div className="App">
-      <h1>Bookstore Application</h1>
-      <AddBook onBookAdded={refreshBooks} />
-      <BookList refresh={refresh} />
-    </div>
+    <Router>
+      <Navbar />
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* Altre rotte per eventuali pagine future */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
