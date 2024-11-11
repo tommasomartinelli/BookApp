@@ -2,34 +2,33 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './BookDetails.css';
 
-const BookDetail = ({ bookId }) => {
+const BookDetail = ({ bookId, onClose }) => {
   const [book, setBook] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
-  
+  const [currentBookId, setCurrentBookId] = useState(bookId);
+
   useEffect(() => {
-    // Fetch book details
-    const fetchBookDetails = async () => {
+    const fetchBookDetails = async (id) => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/books/${bookId}/details/`);
+        const response = await axios.get(`http://localhost:8000/api/books/${id}/details/`);
         setBook(response.data);
       } catch (error) {
         console.error("Error fetching book details:", error);
       }
     };
 
-    // Fetch recommendations
     const fetchRecommendations = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/books/${bookId}/recommendations/`);
+        const response = await axios.get(`http://localhost:8000/api/books/${currentBookId}/recommendations/`);
         setRecommendations(response.data);
       } catch (error) {
         console.error("Error fetching recommendations:", error);
       }
     };
 
-    fetchBookDetails();
+    fetchBookDetails(currentBookId);
     fetchRecommendations();
-  }, [bookId]);
+  }, [currentBookId]);
 
   if (!book) {
     return <p>Loading book details...</p>;
@@ -37,6 +36,7 @@ const BookDetail = ({ bookId }) => {
 
   return (
     <div className="book-detail-container">
+      <button className="close-button" onClick={() => onClose(null)}>×</button>
       <h2>{book.title}</h2>
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Price:</strong> ${book.price}</p>
@@ -44,7 +44,10 @@ const BookDetail = ({ bookId }) => {
       <p><strong>Publication Year:</strong> {book.publication_year || 'N/A'}</p>
       <p><strong>Publisher:</strong> {book.publisher}</p>
       <p><strong>Description:</strong> {book.description}</p>
-      <p><strong>Reviews:</strong> {book.review_count} (Average Rating: {book.avg_rating})</p>
+      
+      {/* Separate fields for Reviews and Average Rating */}
+      <p><strong>Reviews Count:</strong> {book.review_count}</p>
+      <p><strong>Average Rating:</strong> {book.avg_rating}</p>
 
       <h3>Recommended Books</h3>
       {recommendations.length > 0 ? (
@@ -52,6 +55,12 @@ const BookDetail = ({ bookId }) => {
           {recommendations.map(recBook => (
             <li key={recBook.id}>
               <strong>{recBook.title}</strong> by {recBook.author} - ${recBook.price}
+              <button
+                className="details-button"
+                onClick={() => setCurrentBookId(recBook.id)}
+              >
+                View Details
+              </button>
             </li>
           ))}
         </ul>

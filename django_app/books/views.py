@@ -14,6 +14,35 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        # Filtraggio
+        author = self.request.query_params.get('author')
+        title = self.request.query_params.get('title')
+        category = self.request.query_params.get('category')
+        max_price = self.request.query_params.get('max_price')
+        publication_year = self.request.query_params.get('publication_year')
+
+        # Applicare i filtri
+        if author:
+            queryset = queryset.filter(author__icontains=author)
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+        if category:
+            queryset = queryset.filter(category__icontains=category)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+        if publication_year:
+            queryset = queryset.filter(publication_year=publication_year)
+        
+        # Ordinamento
+        sort_by = self.request.query_params.get('sort_by')  # Esempio: 'price' o '-price' (decrescente)
+        if sort_by in ['price', '-price', 'publication_year', '-publication_year']:
+            queryset = queryset.order_by(sort_by)
+        
+        return queryset
+
 @api_view(['GET'])
 def book_details(request, book_id):
     try:
@@ -25,14 +54,11 @@ def book_details(request, book_id):
 
 # Funzione per caricare i dati in matrice user_book
 def load_data():
-    # Carica i dati dei libri
     book_info = pd.DataFrame(list(Book.objects.values('id', 'title', 'author', 'category', 'description', 'price'))).set_index('id')
     
-    # Carica le recensioni
     reviews = pd.DataFrame(list(Review.objects.values('user_id', 'book_id', 'rating')))
     reviews = reviews.rename(columns={'book_id': 'id', 'rating': 'review_score'})
     
-    # Crea la matrice user-book
     user_book_matrix = reviews.pivot(index='user_id', columns='id', values='review_score').fillna(0)
     
     return user_book_matrix, book_info

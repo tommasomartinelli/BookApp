@@ -1,53 +1,83 @@
 .book-detail-container {
-    max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .book-detail-container h2 {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .book-detail-container p {
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-  
-  .book-detail-container p strong {
-    color: #333;
-  }
-  
-  .recommendations-list {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top: 15px;
-  }
-  
-  .recommendations-list li {
-    display: flex;
-    flex-direction: column;
-    background-color: #f1f8ff;
-    padding: 12px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    transition: background-color 0.3s ease;
-  }
-  
-  .recommendations-list li:hover {
-    background-color: #e0f2ff;
-  }
-  
-  .recommendations-list li strong {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.book-detail-container h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.book-detail-container p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.book-detail-container p strong {
+  color: #333;
+}
+
+/* Close button style */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Style for the recommendations list */
+.recommendations-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 15px;
+}
+
+.recommendations-list li {
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f8ff;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  transition: background-color 0.3s ease;
+}
+
+.recommendations-list li:hover {
+  background-color: #e0f2ff;
+}
+
+.recommendations-list li strong {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Style for the Details button to match other buttons */
+.details-button {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.details-button:hover {
+  background-color: #138496;
+}

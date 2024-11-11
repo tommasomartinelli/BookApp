@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import EditBook from './EditBook';
-import BookDetails from './BookDetails'; // Importa BookDetails
+import BookDetails from './BookDetails';
 import './BookList.css';
 
 const BookList = ({ refresh }) => {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [filters, setFilters] = useState({
+    author: '',
+    title: '',
+    category: '',
+    max_price: '',
+  });
   const [editBookId, setEditBookId] = useState(null);
-  const [selectedBookId, setSelectedBookId] = useState(null); // Stato per il libro selezionato per i dettagli
+  const [selectedBookId, setSelectedBookId] = useState(null);
 
-  const fetchBooks = async () => {
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
+
+  // Usando useCallback per memorizzare fetchBooks ed evitare loop
+  const fetchBooks = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/books/');
+      const response = await axios.get('http://localhost:8000/api/books/', {
+        params: {
+          ...filters,
+        },
+      });
       setBooks(response.data);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching books:", error);
-      setLoading(false);
     }
-  };
+  }, [filters]);
 
   useEffect(() => {
     fetchBooks();
-  }, [refresh]);
+  }, [fetchBooks, refresh]);
 
   const handleEdit = (bookId) => {
     setEditBookId(bookId);
@@ -41,23 +54,51 @@ const BookList = ({ refresh }) => {
   };
 
   const handleCloseDetails = () => {
-    setSelectedBookId(null); // Chiude i dettagli quando richiesto
+    setSelectedBookId(null);
   };
-
-  if (loading) {
-    return <p>Loading books...</p>;
-  }
 
   return (
     <div className="table-container">
       <h2>Book List</h2>
+
+      <div className="filters">
+        <input
+          type="text"
+          name="author"
+          placeholder="Author"
+          value={filters.author}
+          onChange={handleFilterChange}
+        />
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={filters.title}
+          onChange={handleFilterChange}
+        />
+        <input
+          type="text"
+          name="category"
+          placeholder="Category"
+          value={filters.category}
+          onChange={handleFilterChange}
+        />
+        <input
+          type="number"
+          name="max_price"
+          placeholder="Max Price"
+          value={filters.max_price}
+          onChange={handleFilterChange}
+        />
+      </div>
+
       {editBookId ? (
         <EditBook
           bookId={editBookId}
           onBookUpdated={() => setEditBookId(null)}
           onCancel={() => setEditBookId(null)}
         />
-      ) : selectedBookId ? ( // Mostra i dettagli del libro selezionato
+      ) : selectedBookId ? (
         <BookDetails bookId={selectedBookId} onClose={handleCloseDetails} />
       ) : (
         <table>
