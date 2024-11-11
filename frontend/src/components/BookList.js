@@ -14,25 +14,28 @@ const BookList = ({ refresh }) => {
   });
   const [editBookId, setEditBookId] = useState(null);
   const [selectedBookId, setSelectedBookId] = useState(null);
+  const [sortColumn, setSortColumn] = useState('');
+  const [sortDirection, setSortDirection] = useState('');
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
   };
 
-  // Usando useCallback per memorizzare fetchBooks ed evitare loop
+  // Fetch books with filters and sorting applied
   const fetchBooks = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/books/', {
         params: {
           ...filters,
+          sort_by: sortDirection + sortColumn,
         },
       });
       setBooks(response.data);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
-  }, [filters]);
+  }, [filters, sortColumn, sortDirection]);
 
   useEffect(() => {
     fetchBooks();
@@ -50,6 +53,15 @@ const BookList = ({ refresh }) => {
       } catch (error) {
         console.error("Error deleting book:", error);
       }
+    }
+  };
+
+  const handleSort = (column) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === '' ? '-' : ''); // Toggles between ascending and descending
+    } else {
+      setSortColumn(column);
+      setSortDirection('');
     }
   };
 
@@ -105,10 +117,18 @@ const BookList = ({ refresh }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Price</th>
-              <th>Category</th>
+              <th onClick={() => handleSort('title')}>
+                Title <span className="sort-icon">{sortColumn === 'title' && (sortDirection === '' ? '▲' : '▼')}</span>
+              </th>
+              <th onClick={() => handleSort('author')}>
+                Author <span className="sort-icon">{sortColumn === 'author' && (sortDirection === '' ? '▲' : '▼')}</span>
+              </th>
+              <th onClick={() => handleSort('price')}>
+                Price <span className="sort-icon">{sortColumn === 'price' && (sortDirection === '' ? '▲' : '▼')}</span>
+              </th>
+              <th onClick={() => handleSort('category')}>
+                Category <span className="sort-icon">{sortColumn === 'category' && (sortDirection === '' ? '▲' : '▼')}</span>
+              </th>
               <th>Actions</th>
             </tr>
           </thead>

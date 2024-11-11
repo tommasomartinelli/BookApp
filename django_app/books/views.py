@@ -24,7 +24,6 @@ class BookViewSet(viewsets.ModelViewSet):
         max_price = self.request.query_params.get('max_price')
         publication_year = self.request.query_params.get('publication_year')
 
-        # Applicare i filtri
         if author:
             queryset = queryset.filter(author__icontains=author)
         if title:
@@ -37,8 +36,8 @@ class BookViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(publication_year=publication_year)
         
         # Ordinamento
-        sort_by = self.request.query_params.get('sort_by')  # Esempio: 'price' o '-price' (decrescente)
-        if sort_by in ['price', '-price', 'publication_year', '-publication_year']:
+        sort_by = self.request.query_params.get('sort_by')
+        if sort_by in ['price', '-price', 'author', '-author', 'title', '-title', 'category', '-category']:
             queryset = queryset.order_by(sort_by)
         
         return queryset
