@@ -1,5 +1,29 @@
 # BookstoreApp
 
+## Getting started 
+
+To run this project locally, follow these steps:
+
+### Prerequisites
+- **Docker**: Make sure Docker and Docker Compose are installed on your machine.
+
+### 1. Clone the Repository
+First, clone this repository to your local machine:
+```bash
+git clone https://github.com/username/bookstore-app.git
+cd bookstore-app```
+
+
+
+
+
+
+
+
+
+
+
+
 ## Data Used
 
 This project uses two datasets available at the following link: [Amazon Books Reviews](https://www.kaggle.com/datasets/mohamedbakhet/amazon-books-reviews). Due to size limitations, these datasets are not included within the repository.
