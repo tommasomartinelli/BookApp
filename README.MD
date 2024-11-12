@@ -11,8 +11,9 @@ To run this project locally, follow these steps:
 First, clone this repository to your local machine:
 ```bash
 git clone https://github.com/username/bookstore-app.git
-cd bookstore-app bash```
+cd bookstore-app 
 
+### 2.
 
 
 
