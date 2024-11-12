@@ -1,83 +1,67 @@
-.book-detail-container {
+/* Overlay che copre l'intera pagina */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenitore della finestra modale per i dettagli del libro */
+.book-detail-modal {
   max-width: 700px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 8px;
+  width: 90%;
+  max-height: 80vh; /* Altezza massima per la modale */
+  padding: 25px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   position: relative;
+  text-align: left;
+  font-family: Arial, sans-serif;
+  overflow-y: auto; /* Abilita lo scorrimento verticale */
 }
 
-.book-detail-container h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-.book-detail-container p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.5;
-  margin-bottom: 8px;
-}
-
-.book-detail-container p strong {
-  color: #333;
-}
-
-/* Close button style */
+/* Stile del pulsante di chiusura */
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 20px;
   font-size: 1.5rem;
   background: none;
   border: none;
   cursor: pointer;
   color: #333;
+  transition: color 0.3s ease;
 }
 
-/* Style for the recommendations list */
+.close-button:hover {
+  color: #000;
+}
+
+/* Stile delle raccomandazioni */
 .recommendations-list {
   list-style-type: none;
-  padding-left: 0;
+  padding: 0;
   margin-top: 15px;
 }
 
 .recommendations-list li {
   display: flex;
   flex-direction: column;
-  background-color: #f1f8ff;
+  background-color: #f1f8e9;
   padding: 12px;
   margin-bottom: 8px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ddd;
   transition: background-color 0.3s ease;
 }
 
 .recommendations-list li:hover {
-  background-color: #e0f2ff;
-}
-
-.recommendations-list li strong {
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-/* Style for the Details button to match other buttons */
-.details-button {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-}
-
-.details-button:hover {
-  background-color: #138496;
+  background-color: #e0f2f1;
 }

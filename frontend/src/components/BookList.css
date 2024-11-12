@@ -1,56 +1,60 @@
 .table-container {
-  width: 80%;
-  margin: 20px auto;
-  border-radius: 8px;
+  width: 85%;
+  margin: 30px auto;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  padding: 20px;
+
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
 table th,
 table td {
-  padding: 12px 15px;
+  padding: 15px 20px;
   text-align: left;
+  font-size: 1rem;
 }
 
 table thead {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #388e3c; /* Verde scuro */
+  color: #ffffff;
 }
 
 table thead th {
   cursor: pointer;
   position: relative;
   user-select: none;
-  padding-right: 20px; /* Spazio per l'icona */
+  padding-right: 25px;
 }
 
 table thead th .sort-icon {
-  margin-left: 5px;
+  margin-left: 8px;
   font-size: 0.8rem;
-  display: inline-block;
   position: absolute;
-  right: 5px; /* Posizione l'icona sulla destra */
+  right: 10px;
   top: 50%;
-  transform: translateY(-50%); /* Centra verticalmente l'icona */
+  transform: translateY(-50%);
 }
 
 table tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f8f8f8;
 }
 
 table tbody tr:hover {
-  background-color: #ddd;
+  background-color: #e0e0e0;
 }
 
+/* Stile dei pulsanti di azione */
 .action-buttons {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  gap: 12px;
 }
 
 .action-buttons button {
@@ -60,24 +64,22 @@ table tbody tr:hover {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
 }
 
 .action-buttons .edit-button {
-  background-color: #4CAF50;
+  background-color: #66bb6a;
   color: white;
 }
 
 .action-buttons .edit-button:hover {
-  background-color: #45a049;
+  background-color: #4CAF50;
 }
 
 .action-buttons .delete-button {
-  background-color: #f44336;
+  background-color: #ef5350;
   color: white;
 }
 
@@ -86,30 +88,40 @@ table tbody tr:hover {
 }
 
 .action-buttons .details-button {
-  background-color: #17a2b8;
+  background-color: #29b6f6;
   color: white;
 }
 
 .action-buttons .details-button:hover {
-  background-color: #138496;
+  background-color: #0288d1;
 }
 
-/* Filter styling */
+.action-buttons .review-button {
+  background-color: #ffa726;
+  color: white;
+}
+
+.action-buttons .review-button:hover {
+  background-color: #fb8c00;
+}
+
 .filters {
   margin-bottom: 20px;
   display: flex;
   gap: 15px;
+  justify-content: center;
 }
 
 .filters input {
-  padding: 8px;
+  padding: 10px;
   font-size: 1rem;
-  border-radius: 4px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  width: 200px;
-  transition: border-color 0.3s ease;
+  width: 220px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filters input:focus {
-  border-color: #4CAF50;
+  border-color: #66bb6a;
+  box-shadow: 0 0 8px rgba(102, 187, 106, 0.4);
 }

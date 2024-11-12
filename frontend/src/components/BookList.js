@@ -2,9 +2,10 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import EditBook from './EditBook';
 import BookDetails from './BookDetails';
+import AddReview from './AddReview';
 import './BookList.css';
 
-const BookList = ({ refresh }) => {
+const BookList = ({ refresh, isAdmin }) => {  // Aggiungi isAdmin come prop
   const [books, setBooks] = useState([]);
   const [filters, setFilters] = useState({
     author: '',
@@ -16,6 +17,7 @@ const BookList = ({ refresh }) => {
   const [selectedBookId, setSelectedBookId] = useState(null);
   const [sortColumn, setSortColumn] = useState('');
   const [sortDirection, setSortDirection] = useState('');
+  const [showAddReview, setShowAddReview] = useState(null); // Gestisce la visualizzazione del form di recensione
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -107,7 +109,10 @@ const BookList = ({ refresh }) => {
       {editBookId ? (
         <EditBook
           bookId={editBookId}
-          onBookUpdated={() => setEditBookId(null)}
+          onBookUpdated={() => {
+            setEditBookId(null);
+            fetchBooks();
+          }}
           onCancel={() => setEditBookId(null)}
         />
       ) : selectedBookId ? (
@@ -142,12 +147,20 @@ const BookList = ({ refresh }) => {
                 <td>{book.category}</td>
                 <td>
                   <div className="action-buttons">
-                    <button className="edit-button" onClick={() => handleEdit(book.id)}>
-                      Edit
-                    </button>
-                    <button className="delete-button" onClick={() => handleDelete(book.id)}>
-                      Delete
-                    </button>
+                    {isAdmin ? (
+                      <>
+                        <button className="edit-button" onClick={() => handleEdit(book.id)}>
+                          Edit
+                        </button>
+                        <button className="delete-button" onClick={() => handleDelete(book.id)}>
+                          Delete
+                        </button>
+                      </>
+                    ) : (
+                      <button className="review-button" onClick={() => setShowAddReview(book.id)}>
+                        Add Review
+                      </button>
+                    )}
                     <button className="details-button" onClick={() => setSelectedBookId(book.id)}>
                       Details
                     </button>
@@ -157,6 +170,17 @@ const BookList = ({ refresh }) => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {showAddReview && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowAddReview(null)}>
+              &times;
+            </span>
+            <AddReview bookId={showAddReview} onReviewAdded={() => setShowAddReview(null)} />
+          </div>
+        </div>
       )}
     </div>
   );

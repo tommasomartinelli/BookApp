@@ -1,11 +1,10 @@
-// src/components/EditBook.js
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AddBook.css';  // Usa lo stesso stile di AddBook
+import './AddBook.css'; 
 
 const EditBook = ({ bookId, onBookUpdated, onCancel }) => {
-  const [id] = useState(bookId);  // Mantieni solo `id`, senza `setId`
+  const [id] = useState(bookId);  
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [price, setPrice] = useState('');
@@ -50,7 +49,7 @@ const EditBook = ({ bookId, onBookUpdated, onCancel }) => {
 
     try {
       await axios.put(`http://localhost:8000/api/books/${bookId}/`, updatedBook);
-      onBookUpdated();  // Chiude il modulo al termine dell'aggiornamento
+      onBookUpdated();  
     } catch (error) {
       console.error("Error updating book:", error.response?.data || error.message);
     }
