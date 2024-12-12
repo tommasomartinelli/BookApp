@@ -36,7 +36,6 @@ To prepare the data for use within the application, follow these steps:
 1- Run the Preprocessing Notebook: Open and run the notebook `Preprocess_data.ipynb` located in the `preprocessing` directory. This notebook processes the raw data files and outputs the cleaned data to the `data_preprocessed directory`.
 
 2- Check Output: After preprocessing, you should see the processed data in the following directory:
-    ```plaintext
       bookstore-app/ 
       └── preprocessing/ 
           └── data_preprocessed/ 
